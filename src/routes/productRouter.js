@@ -16,24 +16,12 @@ productRouter.post(
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
-    const {
-      name,
-      category,
-      description,
-      countInStock,
-      slug,
-      image,
-      price,
-      priceIncome,
-      priceOutcome,
-      brand,
-    } = req.body
-
     const newProduct = new Product({
       name: 'sample name ' + Date.now(),
       slug: 'sample-name-' + Date.now(),
       image: '/images/p1.jpg',
       size: 'PP',
+      coding: 'blusa-01',
       price: 0,
       priceIncome: 0,
       priceOutcome: 0,
@@ -58,6 +46,7 @@ productRouter.put(
       product.name = req.body.name
       product.slug = req.body.slug
       product.price = req.body.price
+      product.coding = req.body.coding
       product.image = req.body.image
       product.size = req.body.size
       product.category = req.body.category
@@ -89,7 +78,7 @@ productRouter.delete(
   }),
 )
 
-const PAGE_SIZE = 3
+const PAGE_SIZE = 25
 
 productRouter.get(
   '/admin',
@@ -119,6 +108,7 @@ productRouter.get(
     const { query } = req
     const pageSize = query.pageSize || PAGE_SIZE
     const page = query.page || 1
+    const coding = query.coding || ''
     const category = query.category || ''
     const price = query.price || ''
     const rating = query.rating || ''
@@ -134,6 +124,7 @@ productRouter.get(
             },
           }
         : {}
+    const codingFilter = coding && coding !== 'all' ? { coding } : {}
     const categoryFilter = category && category !== 'all' ? { category } : {}
     const ratingFilter =
       rating && rating !== 'all'
@@ -169,6 +160,7 @@ productRouter.get(
     const products = await Product.find({
       ...queryFilter,
       ...categoryFilter,
+      ...codingFilter,
       ...priceFilter,
       ...ratingFilter,
     })
@@ -196,6 +188,14 @@ productRouter.get(
   expressAsyncHandler(async (req, res) => {
     const categories = await Product.find().distinct('category')
     res.send(categories)
+  }),
+)
+
+productRouter.get(
+  '/codings',
+  expressAsyncHandler(async (req, res) => {
+    const codings = await Product.find().distinct('coding')
+    res.send(codings)
   }),
 )
 
