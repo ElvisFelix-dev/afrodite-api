@@ -21,7 +21,7 @@ productRouter.post(
       slug: 'sample-name-' + Date.now(),
       image: '/images/p1.jpg',
       size: 'PP',
-      coding: 'blusa-01',
+      codings: 'blusa-01',
       price: 0,
       priceIncome: 0,
       priceOutcome: 0,
@@ -46,7 +46,7 @@ productRouter.put(
       product.name = req.body.name
       product.slug = req.body.slug
       product.price = req.body.price
-      product.coding = req.body.coding
+      product.codings = req.body.codings
       product.image = req.body.image
       product.size = req.body.size
       product.category = req.body.category
@@ -108,7 +108,7 @@ productRouter.get(
     const { query } = req
     const pageSize = query.pageSize || PAGE_SIZE
     const page = query.page || 1
-    const coding = query.coding || ''
+    const codings = query.codings || ''
     const category = query.category || ''
     const price = query.price || ''
     const rating = query.rating || ''
@@ -124,7 +124,7 @@ productRouter.get(
             },
           }
         : {}
-    const codingFilter = coding && coding !== 'all' ? { coding } : {}
+    const codingFilter = codings && codings !== 'all' ? { codings } : {}
     const categoryFilter = category && category !== 'all' ? { category } : {}
     const ratingFilter =
       rating && rating !== 'all'
@@ -194,8 +194,21 @@ productRouter.get(
 productRouter.get(
   '/codings',
   expressAsyncHandler(async (req, res) => {
-    const codings = await Product.find().distinct('coding')
+    const codings = await Product.find().distinct('codings')
     res.send(codings)
+  }),
+)
+
+productRouter.get(
+  '/codings/:codings',
+  expressAsyncHandler(async (req, res) => {
+    const codings = req.params.codings // Obtém o valor do parâmetro da URL
+    const product = await Product.findOne({ codings })
+    if (product) {
+      res.send(product)
+    } else {
+      res.status(404).send({ message: 'Codigo não encontrado' })
+    }
   }),
 )
 
