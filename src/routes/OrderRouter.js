@@ -33,7 +33,7 @@ orderRouter.post(
     })
 
     const order = await newOrder.save()
-    res.status(201).send({ message: 'New Order Created', order })
+    res.status(201).send({ message: 'Nova Compra Criada', order })
   }),
 )
 
@@ -98,7 +98,7 @@ orderRouter.get(
     if (order) {
       res.send(order)
     } else {
-      res.status(404).send({ message: 'Order Not Found' })
+      res.status(404).send({ message: 'Compra não encontrada' })
     }
   }),
 )
@@ -112,9 +112,9 @@ orderRouter.put(
       order.isDelivered = true
       order.deliveredAt = Date.now()
       await order.save()
-      res.send({ message: 'Order Delivered' })
+      res.send({ message: 'Compra Finalizada' })
     } else {
-      res.status(404).send({ message: 'Order Not Found' })
+      res.status(404).send({ message: 'Compra não encontrada' })
     }
   }),
 )
@@ -134,9 +134,9 @@ orderRouter.put(
       }
 
       const updatedOrder = await order.save()
-      res.send({ message: 'Order Paid', order: updatedOrder })
+      res.send({ message: 'Compra Paga', order: updatedOrder })
     } else {
-      res.status(404).send({ message: 'Order Not Found' })
+      res.status(404).send({ message: 'Compra não encontrada' })
     }
   }),
 )
@@ -154,7 +154,7 @@ orderRouter.delete(
       await order.remove()
       res.send({ message: 'Pedido apagado' })
     } else {
-      res.status(404).send({ message: 'Pedido não encontrado' })
+      res.status(404).send({ message: 'Compra não encontrada' })
     }
   }),
 )

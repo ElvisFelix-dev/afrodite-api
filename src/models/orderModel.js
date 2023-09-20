@@ -23,6 +23,7 @@ const orderSchema = new mongoose.Schema(
       phone: { type: String, required: true },
       social: { type: String, required: true },
       email: { type: String, required: true },
+      cpf: { type: String, required: true },
     },
     paymentMethod: { type: String, required: true },
     paymentResult: {
