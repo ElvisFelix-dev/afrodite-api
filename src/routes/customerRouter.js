@@ -18,6 +18,7 @@ customerRouter.post(
       address: req.body.address,
       phone: req.body.phone,
       city: req.body.city,
+      cpf: req.body.cpf,
     })
     const customer = await newcustomer.save()
     res.send({
@@ -28,6 +29,7 @@ customerRouter.post(
       address: customer.address,
       phone: customer.phone,
       city: customer.city,
+      cpf: customer.cpf,
     })
   }),
 )
@@ -46,6 +48,7 @@ customerRouter.put(
       customer.address = req.body.address
       customer.phone = req.body.phone
       customer.city = req.body.city
+      customer.cpf = req.body.cpf
       await customer.save()
       res.send({ message: 'Customer Updated' })
     } else {

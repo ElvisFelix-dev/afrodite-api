@@ -28,10 +28,8 @@ orderRouter.post(
       shippingAddress: req.body.shippingAddress,
       paymentMethod: req.body.paymentMethod,
       itemsPrice: req.body.itemsPrice,
-      shippingPrice: req.body.shippingPrice,
-      taxPrice: req.body.taxPrice,
+
       totalPrice: req.body.totalPrice,
-      user: req.user._id,
     })
 
     const order = await newOrder.save()

@@ -16,13 +16,29 @@ const orderSchema = new mongoose.Schema(
         },
       },
     ],
-
+    shippingAddress: {
+      fullName: { type: String, required: true },
+      address: { type: String, required: true },
+      city: { type: String, required: true },
+      phone: { type: String, required: true },
+      social: { type: String, required: true },
+      email: { type: String, required: true },
+    },
     paymentMethod: { type: String, required: true },
     paymentResult: {
       id: String,
       status: String,
       update_time: String,
+      email_address: String,
     },
+    itemsPrice: { type: Number, required: true },
+
+    totalPrice: { type: Number, required: true },
+
+    isPaid: { type: Boolean, default: false },
+    paidAt: { type: Date },
+    isDelivered: { type: Boolean, default: false },
+    deliveredAt: { type: Date },
   },
   {
     timestamps: true,
@@ -30,5 +46,4 @@ const orderSchema = new mongoose.Schema(
 )
 
 const Order = mongoose.model('Order', orderSchema)
-
 export default Order
