@@ -78,7 +78,7 @@ productRouter.delete(
   }),
 )
 
-const PAGE_SIZE = 25
+const PAGE_SIZE = 30
 
 productRouter.get(
   '/admin',
