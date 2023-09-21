@@ -151,7 +151,7 @@ orderRouter.delete(
       'email name',
     )
     if (order) {
-      await order.remove()
+      await order.deleteOne()
       res.send({ message: 'Pedido apagado' })
     } else {
       res.status(404).send({ message: 'Compra não encontrada' })
