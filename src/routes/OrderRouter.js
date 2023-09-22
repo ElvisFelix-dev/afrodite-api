@@ -141,7 +141,7 @@ orderRouter.put(
   }),
 )
 
-orderRouter.delete(
+/* orderRouter.delete(
   '/:id',
   isAuth,
   isAdmin,
@@ -156,6 +156,23 @@ orderRouter.delete(
     } else {
       res.status(404).send({ message: 'Compra não encontrada' })
     }
+  }),
+) */
+
+orderRouter.delete(
+  '/:id',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id)
+
+    if (!order) {
+      return res.status(404).send({ message: 'Order não encontrada' })
+    }
+
+    await order.deleteOne()
+
+    return res.send({ message: 'Order apagada' })
   }),
 )
 
